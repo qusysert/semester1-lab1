@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 
 namespace lab_1
 {
@@ -240,7 +239,7 @@ namespace lab_1
                         while (true)
                         {
                             rowToChange = ReadInt("Write row:");
-                            if (rowToChange < rows)
+                            if (rowToChange < rows && rowToChange >= 0)
                             {
                                 break;
                             }
@@ -253,7 +252,7 @@ namespace lab_1
                         while (true)
                         {
                             columnToChange = ReadInt("Write column:");
-                            if (columnToChange < elementsInRow)
+                            if (columnToChange < elementsInRow && columnToChange >= 0)
                             {
                                 break;
                             }
@@ -283,7 +282,7 @@ namespace lab_1
                         WriteErrorLine("Wrong input! Try again");
                         break;
                 }
-            } while (anoutherChange == true);
+            } while (anoutherChange);
         }
 
         private static void Point3()
@@ -370,7 +369,7 @@ namespace lab_1
                         while (true)
                         {
                             rowToChange = ReadInt("Write row number:");
-                            if (rowToChange < jagArr.Length)
+                            if (rowToChange < jagArr.Length && rowToChange >= 0)
                             {
                                 break;
                             }
@@ -382,7 +381,7 @@ namespace lab_1
                         while (true)
                         {
                             elementToChange = ReadInt("Write element number:");
-                            if (elementToChange < jagArr[rowToChange].Length)
+                            if (elementToChange < jagArr[rowToChange].Length && elementToChange >= 0)
                             {
                                 break;
                             }
@@ -412,7 +411,7 @@ namespace lab_1
                         WriteErrorLine("Wrong input! Try again");
                         break;
                 }
-            } while (anotherChange == true);
+            } while (anotherChange);
         }
 
         private static int[][] Point3GetJagArrFromConsole()
