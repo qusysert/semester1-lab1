@@ -7,28 +7,22 @@ namespace lab_1
     {
         static void Main(string[] args)
         {
-            do
+            var point = ReadInt(
+                "Which point should I run? Regular array (1), 2D array (2), step array (3) or exit (4)?", 1, 4);
+            switch (point)
             {
-                var point = ReadInt(
-                    "Which point should I run? Regular array (1), 2D array (2), step array (3) or exit (4)?");
-                switch (point)
-                {
-                    case 1:
-                        Point1();
-                        break;
-                    case 2:
-                        Point2();
-                        break;
-                    case 3:
-                        Point3();
-                        break;
-                    case 4:
-                        return;
-                    default:
-                        WriteErrorLine("Wrong input! Try again");
-                        break;
-                }
-            } while (true);
+                case 1:
+                    Point1();
+                    break;
+                case 2:
+                    Point2();
+                    break;
+                case 3:
+                    Point3();
+                    break;
+                case 4:
+                    return;
+            }
         }
 
         private static void Point1()
@@ -38,26 +32,15 @@ namespace lab_1
             int evenAmount = 0;
 
             // Checking input method + filling up array
-            int inputWay;
-            do
-            {
-                inputWay = ReadInt("Should I get numbers from console (1) or from file (2)?");
-                if (inputWay == 1 || inputWay == 2)
-                {
-                    break;
-                }
-
-                WriteErrorLine("Wrong input! Try again");
-            } while (true);
-
+            int inputWay = ReadInt("Should I get numbers from console (1) or from file (2)?", 1, 2);
             if (inputWay == 1)
             {
-                n = ReadInt("Enter size of the array: ");
+                n = ReadInt("Enter size of the array: ", 1);
                 arr = new int[n];
                 Console.WriteLine("Fill up the array: ");
                 for (int i = 0; i < n; i++)
                 {
-                    arr[i] = ReadInt();
+                    arr[i] = ReadInt("Index " + i + ":");
                 }
             }
             else
@@ -67,7 +50,7 @@ namespace lab_1
                     string filePath = Directory.GetCurrentDirectory() + @"\fileArray.txt";
                     arr = Array.ConvertAll(File.ReadAllLines(filePath), int.Parse);
                 }
-                catch (System.FormatException)
+                catch (FormatException)
                 {
                     WriteErrorLine("Invalid file");
                     return;
@@ -150,23 +133,11 @@ namespace lab_1
 
             Console.WriteLine("Evens: " + string.Join(", ", onlyEvenArr));
         }
-        
+
         private static void Point2()
         {
-            int inputWay;
-            do
-            {
-                inputWay = ReadInt("Should I get numbers from console (1) or from file (2)?");
-                if (inputWay == 1 || inputWay == 2)
-                {
-                    break;
-                }
-
-                WriteErrorLine("Wrong input! Try again");
-            } while (true);
-
+            int inputWay = ReadInt("Should I get numbers from console (1) or from file (2)?", 1, 2);
             int[,] doubleArr;
-           
 
             if (inputWay == 1)
             {
@@ -190,6 +161,7 @@ namespace lab_1
                     return;
                 }
             }
+
             int max = 0;
             int indexOfMax = 0;
             int min = doubleArr[0, 0];
@@ -230,35 +202,15 @@ namespace lab_1
             string wantToChangeQ = "Want to change element of array? Yes (1), no (2)?";
             do
             {
-                int wantToChange = ReadInt(wantToChangeQ);
+                int wantToChange = ReadInt(wantToChangeQ, 1, 2);
                 switch (wantToChange)
                 {
                     case 1:
                         // Getting row of element
-                        int rowToChange;
-                        while (true)
-                        {
-                            rowToChange = ReadInt("Write row:");
-                            if (rowToChange < rows && rowToChange >= 0)
-                            {
-                                break;
-                            }
-
-                            WriteErrorLine("Index was outside the bounds of the array. Try again");
-                        }
+                        int rowToChange = ReadInt("Write row:", 0, rows);
 
                         // Getting column of element
-                        int columnToChange;
-                        while (true)
-                        {
-                            columnToChange = ReadInt("Write column:");
-                            if (columnToChange < elementsInRow && columnToChange >= 0)
-                            {
-                                break;
-                            }
-
-                            WriteErrorLine("Index was outside the bounds of the array. Try again");
-                        }
+                        int columnToChange = ReadInt("Write column:", 0, elementsInRow);
 
                         // Changing element
                         doubleArr[rowToChange, columnToChange] = ReadInt("What this element should be?");
@@ -278,34 +230,17 @@ namespace lab_1
                     case 2:
                         anoutherChange = false;
                         break;
-                    default:
-                        WriteErrorLine("Wrong input! Try again");
-                        break;
                 }
             } while (anoutherChange);
         }
 
         private static void Point3()
         {
-            
             int min = Int32.MaxValue;
             int max = 0;
-
-
-            int inputWay;
-            do
-            {
-                inputWay = ReadInt("Should I get numbers from console (1) or from file (2)?");
-                if (inputWay == 1 || inputWay == 2)
-                {
-                    break;
-                }
-
-                WriteErrorLine("Wrong input! Try again");
-            } while (true);
-
+            int inputWay = ReadInt("Should I get numbers from console (1) or from file (2)?", 1, 2);
             int[][] jagArr;
-            
+
             // Inputing jagged array
             if (inputWay == 1)
             {
@@ -328,9 +263,7 @@ namespace lab_1
                     WriteErrorLine("File not found " + filePath);
                     return;
                 }
-           
             }
-        
 
             // write jagged array
             Console.WriteLine("Your jagged array: ");
@@ -362,7 +295,7 @@ namespace lab_1
             string wantToChangeQ = "Do you want to change element of array? Yes (1), no (2)";
             do
             {
-                int wantToChange = ReadInt(wantToChangeQ);
+                int wantToChange = ReadInt(wantToChangeQ, 1, 2);
                 switch (wantToChange)
                 {
                     case 1:
@@ -407,16 +340,13 @@ namespace lab_1
                     case 2:
                         anotherChange = false;
                         break;
-                    default:
-                        WriteErrorLine("Wrong input! Try again");
-                        break;
                 }
             } while (anotherChange);
         }
 
         private static int[][] Point3GetJagArrFromConsole()
         {
-            int amountOfRows = ReadInt("Write amount of rows: ");
+            int amountOfRows = ReadInt("Write amount of rows: ", 1);
             int[][] jagArr = new int[amountOfRows][];
             for (int i = 0; i < amountOfRows; i++)
             {
@@ -424,7 +354,6 @@ namespace lab_1
                 {
                     try
                     {
-                                
                         Console.WriteLine("Write row №{0} (elements divided by space)", i);
                         var inputString = Console.ReadLine().Trim(); // string 
                         var splittedString = inputString.Split(' '); // split string into string array
@@ -437,9 +366,10 @@ namespace lab_1
                     }
                 }
             }
+
             return jagArr;
         }
-        
+
         private static int[][] Point3GetJagArrFromFile(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -448,14 +378,15 @@ namespace lab_1
             {
                 jagArr[i] = Array.ConvertAll(lines[i].Split(' '), Convert.ToInt32);
             }
+
             return jagArr;
-       }
+        }
 
         private static int[,] Point2Get2dArrayFromConsole()
         {
             // Get paraments of array
-            int rows = ReadInt("Insert amount of rows:");
-            int elementsInRow = ReadInt("Insert amount of elements in row:");
+            int rows = ReadInt("Insert amount of rows:", 1);
+            int elementsInRow = ReadInt("Insert amount of elements in row:", 1);
             int[,] doubleArr = new int[rows, elementsInRow];
             WriteQuestionLine("Fill the array:");
 
@@ -464,13 +395,13 @@ namespace lab_1
             {
                 for (int j = 0; j < elementsInRow; j++)
                 {
-                    doubleArr[i, j] = ReadInt();
+                    doubleArr[i, j] = ReadInt("Row " + i + ", element " + j + ":");
                 }
             }
 
             return doubleArr;
         }
-        
+
         private static int[,] Point2Get2dArrayFromFile(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -487,22 +418,30 @@ namespace lab_1
             return doubleArr;
         }
 
-        static int ReadInt(string msg = "")
+        static int ReadInt(string msg, int? min = null, int? max = null)
         {
             do
             {
-                if (msg != "")
-                {
-                    WriteQuestionLine(msg);
-                }
+                WriteQuestionLine(msg);
 
                 try
                 {
-                    return Convert.ToInt32(Console.ReadLine());
+                    int number = Convert.ToInt32(Console.ReadLine());
+                    if (min.HasValue && number < min.Value)
+                    {
+                        throw new FormatException("Number should be greater or equal to " + min.Value);
+                    }
+
+                    if (max.HasValue && number > max.Value)
+                    {
+                        throw new FormatException("Number should be less equal to " + max.Value);
+                    }
+
+                    return number;
                 }
-                catch (FormatException)
+                catch (FormatException e)
                 {
-                    WriteErrorLine("Wrong input! Try again");
+                    WriteErrorLine("Wrong input! " + e.Message);
                 }
                 catch (OverflowException)
                 {
